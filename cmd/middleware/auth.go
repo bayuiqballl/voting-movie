@@ -16,23 +16,19 @@ type Claims struct {
 	Id    string `json:"id"`
 	Email string `json:"email"`
 	jwt.StandardClaims
-	Gender     string `json:"gender"`
-	IsVerified bool   `json:"is_verified"`
-	IsPremium  bool   `json:"is_premium"`
+	Role string `json:"role"`
 }
 
 // Define a function for generating a new JWT
-func GenerateToken(id string, email string, gender string, isVerified, isPremium bool) (string, error) {
+func GenerateToken(id, email, role string) (string, error) {
 	expirationTime := time.Now().Add(time.Hour * time.Duration(24))
 	claims := &Claims{
-		Id:     id,
-		Email:  email,
-		Gender: gender,
+		Id:    id,
+		Email: email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
-		IsVerified: isVerified,
-		IsPremium:  isPremium,
+		Role: role,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
@@ -87,12 +83,9 @@ func AuthUser(c *fiber.Ctx) error {
 	}
 
 	// Set the user ID in the context for future requests
+	c.Locals("userId", claims.Id)
 	c.Locals("email", claims.Email)
-	c.Locals("gender", claims.Gender)
-	c.Locals("user-id", claims.Id)
-	c.Locals("is-verified", claims.IsVerified)
-	c.Locals("is-premium", claims.IsPremium)
-
+	c.Locals("role", claims.Role)
 	// Call the next middleware in the chain
 	return c.Next()
 }
