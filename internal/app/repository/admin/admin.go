@@ -5,12 +5,13 @@ import (
 	"strings"
 	"vote-system/database"
 	"vote-system/internal/entity"
+	"vote-system/pkg/helper"
 )
 
 type AdminRepository interface {
 	CreateAdmin(ctx context.Context, admin *entity.Admin) (err error)
 	CheckAccountNameExists(ctx context.Context, admin *entity.Admin) (status bool, err error)
-	GetAdmin(ctx context.Context, admin *entity.Admin) (err error)
+	GetAdminByEmail(ctx context.Context, request *entity.Admin) (resp *entity.Admin, err error)
 }
 
 type adminRepository struct {
@@ -31,11 +32,13 @@ func (ar *adminRepository) CreateAdmin(ctx context.Context, admin *entity.Admin)
 	return
 }
 
-func (ar *adminRepository) GetAdmin(ctx context.Context, admin *entity.Admin) (err error) {
-	err = ar.Database.DB.WithContext(ctx).First(&admin).Error
+func (ar *adminRepository) GetAdminByEmail(ctx context.Context, request *entity.Admin) (resp *entity.Admin, err error) {
+	err = ar.Database.DB.WithContext(ctx).Where("email = ?", request.Email).Find(&resp).Error
 	if err != nil {
-		return err
+		err = helper.HandleError(err)
+		return resp, err
 	}
+
 	return
 }
 

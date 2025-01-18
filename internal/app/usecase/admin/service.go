@@ -10,6 +10,7 @@ import (
 
 type Service interface {
 	RegisterAdmin(ctx context.Context, request *entity.Admin) (err error)
+	LoginAdmin(ctx context.Context, request *entity.LoginAdmin) (resp *entity.LoginAdminResponse, err error)
 }
 
 type service struct {

@@ -6,4 +6,5 @@ const (
 	MsgErrorInternal  = "internal server error"
 	MsgErrorTimeout   = "request timeout"
 	MsgInvalidRequest = "invalid request"
+	MsgWrongPassword  = "wrong password"
 )

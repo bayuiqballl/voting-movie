@@ -1,12 +1,11 @@
 package helper
 
 import (
-	"crypto/sha512"
-	"encoding/hex"
 	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Response struct {
@@ -14,11 +13,17 @@ type Response struct {
 	Message interface{} `json:"message"`
 }
 
-func EncryptPassword(text string) string {
-	passwordHash := sha512.Sum512([]byte(text))
-	return hex.EncodeToString(passwordHash[:])
+// HashPassword hashes the password using bcrypt
+func HashPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	return string(hash), err
 }
 
+// CheckPassword compares a plaintext password with a hashed password
+func CheckPassword(hashedPassword, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	return err == nil
+}
 func ResponseError(ctx *fiber.Ctx, err error) error {
 	var (
 		statusCode    int
