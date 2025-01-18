@@ -39,7 +39,8 @@ func AdminRoutes(app fiber.Router, adminHandler handler.AdminHandler) {
 }
 
 func UserRoutes(app fiber.Router, userHandler handler.UserHandler) {
-
+	app.Post("/user", userHandler.RegisterUser)
+	app.Post("/user/login", userHandler.LoginUser)
 }
 
 func MovieRoutes(app fiber.Router, movieHandler handler.MovieHandler) {

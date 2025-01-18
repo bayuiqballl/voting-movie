@@ -86,6 +86,10 @@ func AuthUser(c *fiber.Ctx) error {
 	c.Locals("user-id", claims.Id)
 	c.Locals("email", claims.Email)
 	c.Locals("role", claims.Role)
+	if claims.Role == "" {
+		claims.Role = "user"
+	}
+
 	// Call the next middleware in the chain
 	return c.Next()
 }

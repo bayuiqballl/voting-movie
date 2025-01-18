@@ -1,12 +1,17 @@
 package user
 
 import (
+	"context"
 	repository "vote-system/internal/app/repository/user"
+	"vote-system/internal/entity"
 	"vote-system/pkg/identifier"
 	"vote-system/pkg/validator"
 )
 
-type Service interface{}
+type Service interface {
+	CreateUser(ctx context.Context, request *entity.User) (err error)
+	LoginUser(ctx context.Context, request *entity.LoginUser) (resp *entity.LoginUserResponse, err error)
+}
 
 type service struct {
 	repository repository.UserRepository
