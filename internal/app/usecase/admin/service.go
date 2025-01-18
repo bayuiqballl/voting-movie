@@ -1,12 +1,16 @@
 package admin
 
 import (
+	"context"
 	repository "vote-system/internal/app/repository/admin"
+	"vote-system/internal/entity"
 	"vote-system/pkg/identifier"
 	"vote-system/pkg/validator"
 )
 
-type Service interface{}
+type Service interface {
+	RegisterAdmin(ctx context.Context, request *entity.Admin) (err error)
+}
 
 type service struct {
 	repository repository.AdminRepository

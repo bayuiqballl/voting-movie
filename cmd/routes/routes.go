@@ -15,7 +15,7 @@ func SetupRoutes(
 }
 
 func AdminRoutes(app fiber.Router, adminHandler handler.AdminHandler) {
-
+	app.Post("/admin", adminHandler.RegisterAdmin)
 }
 
 func UserRoutes(app fiber.Router, userHandler handler.UserHandler) {
