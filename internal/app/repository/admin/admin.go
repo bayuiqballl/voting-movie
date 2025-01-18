@@ -46,7 +46,7 @@ func (ar *adminRepository) CheckAccountNameExists(ctx context.Context, admin *en
 	var count int64
 	err = ar.Database.DB.WithContext(ctx).
 		Model(&entity.Admin{}).
-		Where("email = ? ", strings.ToLower(admin.Email)).
+		Where("lower(email) = ? ", strings.ToLower(admin.Email)).
 		Count(&count).Error
 
 	if err != nil {

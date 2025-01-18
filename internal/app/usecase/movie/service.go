@@ -1,6 +1,7 @@
 package movie
 
 import (
+	"context"
 	"mime/multipart"
 	repository "vote-system/internal/app/repository/movie"
 	"vote-system/internal/entity"
@@ -12,6 +13,7 @@ import (
 
 type Service interface {
 	UploadMovie(c *fiber.Ctx, file *multipart.FileHeader) (resp entity.UploadMovieResponse, err error)
+	InsertMovie(context context.Context, request *entity.Movie) (err error)
 }
 
 type service struct {

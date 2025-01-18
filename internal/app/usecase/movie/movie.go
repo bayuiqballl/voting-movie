@@ -1,6 +1,7 @@
 package movie
 
 import (
+	"context"
 	"fmt"
 	"mime/multipart"
 	"net/http"
@@ -56,6 +57,31 @@ func (ms *service) UploadMovie(c *fiber.Ctx, file *multipart.FileHeader) (resp e
 
 	resp = entity.UploadMovieResponse{
 		WatchURL: fileURL,
+	}
+
+	return
+}
+
+func (ms *service) InsertMovie(context context.Context, request *entity.Movie) (err error) {
+
+	if err = ms.validator.Validate(request); err != nil {
+		err = helper.Error(http.StatusBadRequest, "validation error", err)
+		return
+	}
+
+	status, err := ms.repository.CheckMovieTitleExists(context, request)
+	if err != nil {
+		return err
+	}
+
+	if status {
+		err = helper.Error(http.StatusBadRequest, "movie title already exists", nil)
+		return
+	}
+
+	err = ms.repository.CreateMovie(context, request)
+	if err != nil {
+		return err
 	}
 
 	return

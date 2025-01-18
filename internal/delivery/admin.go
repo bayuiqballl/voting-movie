@@ -16,6 +16,7 @@ type AdminHandler interface {
 	RegisterAdmin(c *fiber.Ctx) (err error)
 	LoginAdmin(c *fiber.Ctx) (err error)
 	UploadMovie(c *fiber.Ctx) (err error)
+	InsertMovie(c *fiber.Ctx) (err error)
 }
 
 type adminHandler struct {
@@ -94,4 +95,29 @@ func (h *adminHandler) UploadMovie(c *fiber.Ctx) (err error) {
 
 	return helper.ResponseCreatedOK(c, constant.Success, resp)
 
+}
+
+func (h *adminHandler) InsertMovie(c *fiber.Ctx) (err error) {
+	ctx, cancel := helper.CreateContextWithTimeout()
+	defer cancel()
+	ctx = helper.SetValueToContext(ctx, c)
+
+	valueCtx := helper.GetValueContext(ctx)
+	if valueCtx.Role != "admin" {
+		err = helper.Error(http.StatusUnauthorized, constant.MsgUnauthorized, errors.New("unauthorized"))
+		return helper.ResponseError(c, err)
+	}
+
+	request := new(entity.Movie)
+	if err = c.BodyParser(request); err != nil {
+		err = helper.Error(http.StatusBadRequest, constant.MsgInvalidRequest, err)
+		return
+	}
+
+	err = h.movieService.InsertMovie(ctx, request)
+	if err != nil {
+		return helper.ResponseError(c, err)
+	}
+
+	return helper.ResponseCreatedOK(c, constant.Success, nil)
 }
