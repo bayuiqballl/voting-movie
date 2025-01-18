@@ -13,3 +13,7 @@ type Movie struct {
 	CreatedAt   time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
+
+type UploadMovieResponse struct {
+	WatchURL string `json:"watch_url"`
+}

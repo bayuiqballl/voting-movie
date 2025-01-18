@@ -1,12 +1,14 @@
 package delivery
 
-import "vote-system/internal/app/usecase/movie"
+import (
+	"vote-system/internal/app/usecase/viewership"
+)
 
 type ViewershipHandler struct {
-	service movie.Service
+	service viewership.Service
 }
 
-func NewViewershipHandler(service movie.Service) ViewershipHandler {
+func NewViewershipHandler(service viewership.Service) ViewershipHandler {
 	return ViewershipHandler{
 		service: service,
 	}

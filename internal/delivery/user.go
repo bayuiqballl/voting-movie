@@ -1,12 +1,14 @@
 package delivery
 
-import "vote-system/internal/app/usecase/movie"
+import (
+	"vote-system/internal/app/usecase/user"
+)
 
 type UserHandler struct {
-	service movie.Service
+	service user.Service
 }
 
-func NewUserHandler(service movie.Service) UserHandler {
+func NewUserHandler(service user.Service) UserHandler {
 	return UserHandler{
 		service: service,
 	}

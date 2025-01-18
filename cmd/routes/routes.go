@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"os"
+	"vote-system/cmd/middleware"
 	handler "vote-system/internal/delivery"
 
 	"github.com/gofiber/fiber/v2"
@@ -12,11 +14,26 @@ func SetupRoutes(
 
 ) {
 	app.Get("/", monitor.New())
+
+	app.Get("/uploads/:filename", func(c *fiber.Ctx) error {
+		// Extract the filename from the URL
+		filename := c.Params("filename")
+		filepath := "../uploads/" + filename
+
+		// Check if the file exists
+		if _, err := os.Stat(filepath); os.IsNotExist(err) {
+			return c.Status(fiber.StatusNotFound).SendString("File not found")
+		}
+
+		// Serve the file
+		return c.SendFile(filepath)
+	})
 }
 
 func AdminRoutes(app fiber.Router, adminHandler handler.AdminHandler) {
 	app.Post("/admin", adminHandler.RegisterAdmin)
 	app.Post("/admin/login", adminHandler.LoginAdmin)
+	app.Post("/admin/upload", middleware.AuthUser, adminHandler.UploadMovie)
 }
 
 func UserRoutes(app fiber.Router, userHandler handler.UserHandler) {

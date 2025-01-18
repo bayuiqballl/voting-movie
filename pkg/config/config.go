@@ -15,6 +15,7 @@ type Config struct {
 	DatabaseName      string `envconfig:"DATABASE_NAME" default:"dating"`
 	DatabasePort      string `envconfig:"DATABASE_PORT" default:"5432"`
 	DatabaseMigration bool   `envconfig:"DATABASE_MIGRATION" default:"false"`
+	BaseURL           string `envconfig:"BASE_URL" default:"http://localhost:3000"`
 }
 
 func SetupEnvFile() *Config {

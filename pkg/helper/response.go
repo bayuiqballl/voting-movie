@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type Response struct {
@@ -13,17 +12,6 @@ type Response struct {
 	Message interface{} `json:"message"`
 }
 
-// HashPassword hashes the password using bcrypt
-func HashPassword(password string) (string, error) {
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(hash), err
-}
-
-// CheckPassword compares a plaintext password with a hashed password
-func CheckPassword(hashedPassword, password string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-	return err == nil
-}
 func ResponseError(ctx *fiber.Ctx, err error) error {
 	var (
 		statusCode    int
