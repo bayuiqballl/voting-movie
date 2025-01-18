@@ -4,8 +4,8 @@ import "time"
 
 type User struct {
 	ID        int       `gorm:"primaryKey" json:"id"`
-	Email     string    `gorm:"size:100;unique;not null" json:"email"`
-	Password  string    `gorm:"size:255;not null" json:"password"`
+	Email     string    `gorm:"size:100;unique;not null" json:"email" validation:"required"`
+	Password  string    `gorm:"size:255;not null" json:"password" validation:"required"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
