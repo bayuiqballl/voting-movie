@@ -35,6 +35,7 @@ func AdminRoutes(app fiber.Router, adminHandler handler.AdminHandler) {
 	app.Post("/admin/login", adminHandler.LoginAdmin)
 	app.Post("/admin/upload", middleware.AuthUser, adminHandler.UploadMovie)
 	app.Post("/admin/insert", middleware.AuthUser, adminHandler.InsertMovie)
+	app.Put("/admin/update", middleware.AuthUser, adminHandler.UpdateMovie)
 }
 
 func UserRoutes(app fiber.Router, userHandler handler.UserHandler) {

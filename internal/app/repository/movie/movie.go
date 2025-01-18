@@ -5,11 +5,14 @@ import (
 	"strings"
 	"vote-system/database"
 	"vote-system/internal/entity"
+	"vote-system/pkg/helper"
 )
 
 type MovieRepository interface {
 	CreateMovie(ctx context.Context, movie *entity.Movie) (err error)
 	CheckMovieTitleExists(ctx context.Context, request *entity.Movie) (status bool, err error)
+	UpdateMovie(ctx context.Context, request *entity.Movie) (err error)
+	GetMovieByID(ctx context.Context, request *entity.Movie) (resp *entity.Movie, err error)
 }
 
 type movieRepository struct {
@@ -48,4 +51,25 @@ func (mr *movieRepository) CheckMovieTitleExists(ctx context.Context, request *e
 	}
 
 	return false, nil
+}
+
+func (mr *movieRepository) GetMovieByID(ctx context.Context, request *entity.Movie) (resp *entity.Movie, err error) {
+
+	err = mr.Database.DB.WithContext(ctx).Where("id = ?", request.ID).Find(&resp).Error
+	if err != nil {
+		err = helper.HandleError(err)
+		return resp, err
+	}
+
+	return
+}
+
+func (mr *movieRepository) UpdateMovie(ctx context.Context, request *entity.Movie) (err error) {
+
+	err = mr.Database.DB.WithContext(ctx).Save(&request).Error
+	if err != nil {
+		return err
+	}
+
+	return
 }

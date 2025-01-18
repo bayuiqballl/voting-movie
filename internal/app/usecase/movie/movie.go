@@ -86,3 +86,34 @@ func (ms *service) InsertMovie(context context.Context, request *entity.Movie) (
 
 	return
 }
+
+func (ms *service) UpdateMovie(context context.Context, request *entity.Movie) (err error) {
+
+	getMovie, err := ms.repository.GetMovieByID(context, request)
+	if err != nil {
+		return err
+	}
+
+	if getMovie.ID == 0 {
+		err = helper.Error(http.StatusBadRequest, "movie not found", nil)
+		return
+	}
+
+	status, err := ms.repository.CheckMovieTitleExists(context, request)
+	if err != nil {
+		return err
+	}
+
+	if request.Title != getMovie.Title && status {
+		err = helper.Error(http.StatusBadRequest, "movie title already exists", nil)
+		return
+	}
+
+	err = ms.repository.UpdateMovie(context, request)
+	if err != nil {
+		return err
+	}
+
+	return
+
+}
