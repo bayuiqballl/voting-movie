@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"errors"
 	"net/http"
 	"vote-system/internal/app/usecase/admin"
 	"vote-system/internal/app/usecase/movie"
@@ -70,8 +71,15 @@ func (h *adminHandler) LoginAdmin(c *fiber.Ctx) (err error) {
 }
 
 func (h *adminHandler) UploadMovie(c *fiber.Ctx) (err error) {
-	_, cancel := helper.CreateContextWithTimeout()
+	ctx, cancel := helper.CreateContextWithTimeout()
 	defer cancel()
+	ctx = helper.SetValueToContext(ctx, c)
+
+	valueCtx := helper.GetValueContext(ctx)
+	if valueCtx.Role != "admin" {
+		err = helper.Error(http.StatusUnauthorized, constant.MsgUnauthorized, errors.New("unauthorized"))
+		return helper.ResponseError(c, err)
+	}
 
 	file, err := c.FormFile("file")
 	if err != nil {

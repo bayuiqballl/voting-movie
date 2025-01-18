@@ -83,7 +83,7 @@ func AuthUser(c *fiber.Ctx) error {
 	}
 
 	// Set the user ID in the context for future requests
-	c.Locals("userId", claims.Id)
+	c.Locals("user-id", claims.Id)
 	c.Locals("email", claims.Email)
 	c.Locals("role", claims.Role)
 	// Call the next middleware in the chain

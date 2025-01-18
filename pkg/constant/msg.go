@@ -7,4 +7,5 @@ const (
 	MsgErrorTimeout   = "request timeout"
 	MsgInvalidRequest = "invalid request"
 	MsgWrongPassword  = "wrong password"
+	MsgUnauthorized   = "unauthorized"
 )

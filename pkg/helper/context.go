@@ -28,10 +28,15 @@ func SetValueToContext(ctx context.Context, c *fiber.Ctx) context.Context {
 	if !ok {
 		email = "0"
 	}
+	Role, ok := c.Locals("role").(string)
+	if !ok {
+		Role = "0"
+	}
 
 	ctx = context.WithValue(ctx, constant.HeaderContext, entity.ValueContext{
 		UserId: userId,
 		Email:  email,
+		Role:   Role,
 	})
 
 	return context.WithValue(ctx, constant.FiberContext, c)
