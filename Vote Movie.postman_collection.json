@@ -1,0 +1,523 @@
+{
+	"info": {
+		"_postman_id": "8a466580-afa9-4d1b-a83e-2a96fdbd4695",
+		"name": "Vote Movie",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8056807",
+		"_collection_link": "https://warped-meadow-959364.postman.co/workspace/My-Workspace~315ceaad-0f93-4ada-8ffa-e3af960dbb93/collection/8056807-8a466580-afa9-4d1b-a83e-2a96fdbd4695?action=share&source=collection_link&creator=8056807"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Upload Movie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzAwNTAyLCJyb2xlIjoiYWRtaW4ifQ.RL9HXUObE4-_86RWkulYbzljL2y9SOR7ZBYKN4x5PFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/bayuiqballl/Downloads/SampleVideo_1280x720_5mb.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/admin/upload-movie",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"admin",
+								"upload-movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Movie Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzAwNTAyLCJyb2xlIjoiYWRtaW4ifQ.RL9HXUObE4-_86RWkulYbzljL2y9SOR7ZBYKN4x5PFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Merdeka\",\n    \"description\": \"loremadadq adasdasdas\",\n    \"duration\": 3800,\n    \"artists\": \"Bayu\",\n    \"genres\": \"Comedy\",\n    \"watch_url\": \"http://localhost:5004/uploads/2280207844.mp4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/admin/insert-movie",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"admin",
+								"insert-movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movie Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjciLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzAwNTAyLCJyb2xlIjoiYWRtaW4ifQ.RL9HXUObE4-_86RWkulYbzljL2y9SOR7ZBYKN4x5PFo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 9,\n    \"title\": \"Movie\",\n    \"description\": \"ionoc\",\n    \"duration\": 4300,\n    \"artists\": \"Iqbl\",\n    \"genres\": \"Horor\",\n    \"watch_url\": \"http://localhost:5004/uploads/221210207844.mp4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/admin/update-movie",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"admin",
+								"update-movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bayuiqballl13@gmail.com\",\n    \"password\": \"admin\",\n    \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/admin",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bayuiqballl13@gmail.com\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/admin/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bayuiqballl13@gmail.com\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/user",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"bayuiqballl13@gmail.com\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/user/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List Movie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzQ5MTYwLCJyb2xlIjoiIn0.4g3U5SG-FPWmhkGaqElUfYoX_2h8on1zxFVHNm9uphs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5004/movie?search=loremadadq adasdasdas",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"movie"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "loremadadq adasdasdas"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movie",
+			"item": [
+				{
+					"name": "Get Most Data Viewed, genre and voted",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzQ5MTYwLCJyb2xlIjoiIn0.4g3U5SG-FPWmhkGaqElUfYoX_2h8on1zxFVHNm9uphs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5004/movie/most-data",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"movie",
+								"most-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie mp4",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5004/uploads/:filename",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5004",
+							"path": [
+								"uploads",
+								":filename"
+							],
+							"variable": [
+								{
+									"key": "filename",
+									"value": "0840222028.mp4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Viewership",
+			"item": [
+				{
+					"name": "Track Viewership",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\" :2,\n    \"movie_id\":1,\n    \"duration\":5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/viewership",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"viewership"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vote",
+			"item": [
+				{
+					"name": "Vote API",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzQ5MTYwLCJyb2xlIjoiIn0.4g3U5SG-FPWmhkGaqElUfYoX_2h8on1zxFVHNm9uphs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"movie_id\": 11,\n    \"is_vote\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5004/vote",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get List vote user by movie id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImJheXVpcWJhbGxsMTNAZ21haWwuY29tIiwiZXhwIjoxNzM3MzQ5MTYwLCJyb2xlIjoiIn0.4g3U5SG-FPWmhkGaqElUfYoX_2h8on1zxFVHNm9uphs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5004/vote/list-user?movie_id=20",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5004",
+							"path": [
+								"vote",
+								"list-user"
+							],
+							"query": [
+								{
+									"key": "movie_id",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
