@@ -13,9 +13,24 @@ func (s *service) UpsertViewership(ctx context.Context, request *entity.Viewersh
 		return err
 	}
 
-	err = s.repository.UpsertViewership(ctx, request)
+	getMovieDetail, err := s.movieRepo.GetMovieByID(ctx, &entity.Movie{
+		ID: request.MovieID,
+	})
 	if err != nil {
 		return err
 	}
+
+	if getMovieDetail.ID == 0 {
+		err = helper.Error(http.StatusBadRequest, "movie not found", nil)
+		return err
+	}
+
+	if getMovieDetail.Duration >= request.Duration {
+		err = s.repository.UpsertViewership(ctx, request)
+		if err != nil {
+			return err
+		}
+	}
+
 	return
 }

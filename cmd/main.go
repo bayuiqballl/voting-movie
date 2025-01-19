@@ -42,7 +42,7 @@ func main() {
 	userService := userSvc.NewService(userRepository, validator, identifier)
 	movieService := movieSvc.NewService(movieRepository, validator, identifier)
 	votesService := votesSvc.NewService(votesRepository, validator, identifier)
-	viewershipService := viewershipSvc.NewService(viewershipRepository, validator, identifier)
+	viewershipService := viewershipSvc.NewService(viewershipRepository, validator, identifier, movieRepository)
 
 	adminHandler := handler.NewAdminHandler(adminService, movieService)
 	userHandler := handler.NewUserHandler(userService)
