@@ -13,6 +13,7 @@ type MovieRepository interface {
 	CheckMovieTitleExists(ctx context.Context, request *entity.Movie) (status bool, err error)
 	UpdateMovie(ctx context.Context, request *entity.Movie) (err error)
 	GetMovieByID(ctx context.Context, request *entity.Movie) (resp *entity.Movie, err error)
+	GetListMovies(ctx context.Context, request entity.GetListMovieRequest) (resp helper.PaginatedResponse, err error)
 }
 
 type movieRepository struct {
@@ -70,6 +71,42 @@ func (mr *movieRepository) UpdateMovie(ctx context.Context, request *entity.Movi
 	if err != nil {
 		return err
 	}
+
+	return
+}
+
+func (mr *movieRepository) GetListMovies(ctx context.Context, request entity.GetListMovieRequest) (resp helper.PaginatedResponse, err error) {
+
+	offset := (request.Page - 1) * request.Limit
+
+	var (
+		movies     []entity.Movie
+		totalCount int64
+	)
+
+	query := mr.Database.DB.WithContext(ctx).Model(&entity.Movie{})
+
+	if request.Search != "" {
+		query = query.Where("title LIKE ? OR description LIKE ? OR artists LIKE ? OR genres LIKE ?", "%"+request.Search+"%", "%"+request.Search+"%", "%"+request.Search+"%", "%"+request.Search+"%")
+	}
+
+	// Count total transactions for pagination metadata
+	if err := query.Count(&totalCount).Error; err != nil {
+		return helper.PaginatedResponse{}, helper.HandleError(err)
+	}
+
+	// Fetch paginated movies
+	if err := query.Limit(request.Limit).Offset(offset).Find(&movies).Error; err != nil {
+		return helper.PaginatedResponse{}, helper.HandleError(err)
+	}
+
+	// Ensure movies is not nil
+	if len(movies) == 0 {
+		movies = []entity.Movie{}
+	}
+
+	// Construct paginated response
+	resp = helper.NewPaginatedResponse(request.Page, request.Limit, totalCount, movies)
 
 	return
 }

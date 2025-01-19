@@ -117,3 +117,22 @@ func (ms *service) UpdateMovie(context context.Context, request *entity.Movie) (
 	return
 
 }
+
+func (ms *service) GetListMovies(context context.Context, request entity.GetListMovieRequest) (resp helper.PaginatedResponse, err error) {
+
+	if request.Limit == 0 {
+		request.Limit = 10
+	}
+
+	if request.Page == 0 {
+		request.Page = 1
+	}
+
+	resp, err = ms.repository.GetListMovies(context, request)
+	if err != nil {
+		return resp, err
+	}
+
+	return
+
+}

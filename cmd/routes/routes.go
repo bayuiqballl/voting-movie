@@ -44,7 +44,7 @@ func UserRoutes(app fiber.Router, userHandler handler.UserHandler) {
 }
 
 func MovieRoutes(app fiber.Router, movieHandler handler.MovieHandler) {
-
+	app.Get("/movie", middleware.AuthUser, movieHandler.GetListMovies)
 }
 
 func VoteRoutes(app fiber.Router, voteHandler handler.VotesHandler) {

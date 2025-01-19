@@ -17,3 +17,9 @@ type Movie struct {
 type UploadMovieResponse struct {
 	WatchURL string `json:"watch_url"`
 }
+
+type GetListMovieRequest struct {
+	Page   int    `query:"page"`
+	Limit  int    `query:"limit"`
+	Search string `query:"search"`
+}
