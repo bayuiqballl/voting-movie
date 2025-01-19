@@ -14,3 +14,8 @@ type VoteRequest struct {
 	UserID  int  `json:"user_id"`
 	IsVote  bool `json:"is_vote" validation:"required"`
 }
+
+type GetListUserVoteResponse struct {
+	Email  string `json:"email" `
+	UserID int    `json:"user_id" `
+}

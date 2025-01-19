@@ -10,6 +10,7 @@ import (
 
 type Service interface {
 	UpsertVotes(ctx context.Context, request *entity.VoteRequest) (err error)
+	GetListUserVotes(ctx context.Context, movieID int) (votes []entity.GetListUserVoteResponse, err error)
 }
 
 type service struct {

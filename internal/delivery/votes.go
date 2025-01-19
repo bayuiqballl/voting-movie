@@ -13,6 +13,7 @@ import (
 
 type VotesHandler interface {
 	Vote(c *fiber.Ctx) (err error)
+	GetListUserVotes(c *fiber.Ctx) (err error)
 }
 
 type votesHandler struct {
@@ -51,4 +52,24 @@ func (vh *votesHandler) Vote(c *fiber.Ctx) (err error) {
 	}
 
 	return helper.ResponseCreatedOK(c, constant.Success, nil)
+}
+
+func (vh *votesHandler) GetListUserVotes(c *fiber.Ctx) (err error) {
+	ctx, cancel := helper.CreateContextWithTimeout()
+	defer cancel()
+	ctx = helper.SetValueToContext(ctx, c)
+
+	movieID := c.QueryInt("movie_id")
+	if movieID == 0 {
+		err = helper.Error(http.StatusBadRequest, constant.MsgInvalidRequest, nil)
+		return
+	}
+
+	resp, err := vh.service.GetListUserVotes(ctx, movieID)
+	if err != nil {
+		return helper.ResponseError(c, err)
+	}
+
+	return helper.ResponseOK(c, constant.Success, resp)
+
 }

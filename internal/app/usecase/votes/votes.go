@@ -44,3 +44,19 @@ func (vs *service) UpsertVotes(ctx context.Context, request *entity.VoteRequest)
 	return
 
 }
+
+func (vs *service) GetListUserVotes(ctx context.Context, movieID int) (votes []entity.GetListUserVoteResponse, err error) {
+
+	if movieID == 0 {
+		err = helper.Error(http.StatusBadRequest, "movie ID is required", nil)
+		return nil, err
+	}
+
+	votes, err = vs.repository.GetListUserVotes(ctx, movieID)
+	if err != nil {
+		return nil, err
+	}
+
+	return
+
+}

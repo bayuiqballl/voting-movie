@@ -10,6 +10,7 @@ type VotesRepository interface {
 	CreateVotes(ctx context.Context, votes *entity.Vote) (err error)
 	DeleteVotes(ctx context.Context, votes *entity.Vote) (err error)
 	CheckVoteExists(ctx context.Context, votes *entity.Vote) (status bool, err error)
+	GetListUserVotes(ctx context.Context, movieID int) (votes []entity.GetListUserVoteResponse, err error)
 }
 
 type votesRepository struct {
@@ -60,4 +61,25 @@ func (vr *votesRepository) CheckVoteExists(ctx context.Context, votes *entity.Vo
 	}
 
 	return false, nil
+}
+
+func (vr *votesRepository) GetListUserVotes(ctx context.Context, movieID int) (votes []entity.GetListUserVoteResponse, err error) {
+
+	err = vr.Database.DB.WithContext(ctx).
+		Table("votes").
+		Select("users.email as email, users.id as user_id").
+		Joins("inner join users on users.id = votes.user_id").
+		Where("votes.movie_id = ?", movieID).
+		Find(&votes).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	if len(votes) == 0 {
+		votes = []entity.GetListUserVoteResponse{}
+	}
+
+	return
+
 }
