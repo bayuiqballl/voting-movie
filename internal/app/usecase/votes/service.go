@@ -1,12 +1,16 @@
 package votes
 
 import (
+	"context"
 	repository "vote-system/internal/app/repository/votes"
+	"vote-system/internal/entity"
 	"vote-system/pkg/identifier"
 	"vote-system/pkg/validator"
 )
 
-type Service interface{}
+type Service interface {
+	UpsertVotes(ctx context.Context, request *entity.VoteRequest) (err error)
+}
 
 type service struct {
 	repository repository.VotesRepository

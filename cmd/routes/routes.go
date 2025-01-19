@@ -48,9 +48,9 @@ func MovieRoutes(app fiber.Router, movieHandler handler.MovieHandler) {
 }
 
 func VoteRoutes(app fiber.Router, voteHandler handler.VotesHandler) {
-
+	app.Post("/vote", middleware.AuthUser, voteHandler.Vote)
 }
 
 func ViewershipRoutes(app fiber.Router, viewershipHandler handler.ViewershipHandler) {
-	app.Post("/viewership", viewershipHandler.UpsertViewership)
+	app.Post("/viewership", middleware.AuthUser, viewershipHandler.UpsertViewership)
 }
