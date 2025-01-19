@@ -14,6 +14,7 @@ type MovieRepository interface {
 	UpdateMovie(ctx context.Context, request *entity.Movie) (err error)
 	GetMovieByID(ctx context.Context, request *entity.Movie) (resp *entity.Movie, err error)
 	GetListMovies(ctx context.Context, request entity.GetListMovieRequest) (resp helper.PaginatedResponse, err error)
+	GetMostDataMovie(ctx context.Context) (resp *entity.GetMostDataMovie, err error)
 }
 
 type movieRepository struct {
@@ -107,6 +108,53 @@ func (mr *movieRepository) GetListMovies(ctx context.Context, request entity.Get
 
 	// Construct paginated response
 	resp = helper.NewPaginatedResponse(request.Page, request.Limit, totalCount, movies)
+
+	return
+}
+
+func (mr *movieRepository) GetMostDataMovie(ctx context.Context) (resp *entity.GetMostDataMovie, err error) {
+
+	var (
+		mostView  entity.MostView
+		mostGenre entity.MostGenre
+		mostVoted entity.MostVoted
+	)
+
+	err = mr.Database.DB.WithContext(ctx).Table("movies").Select("movies.id as movie_id, movies.title as title, count(*) as count").
+		Joins("inner join viewerships on viewerships.movie_id = movies.id").
+		Group("movies.id").
+		Order("count desc").
+		Limit(1).Find(&mostView).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = mr.Database.DB.WithContext(ctx).Table("movies").Select("movies.id as movie_id, movies.title as title, count(*) as count").
+		Joins("inner join votes on votes.movie_id = movies.id").
+		Group("movies.id").
+		Order("count desc").
+		Limit(1).Find(&mostVoted).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = mr.Database.DB.WithContext(ctx).Table("movies").Select("movies.id as movie_id, movies.genres as genre, count(*) as count").
+		Joins("inner join viewerships on viewerships.movie_id = movies.id").
+		Group("movies.id").
+		Order("count desc").
+		Limit(1).Find(&mostGenre).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	resp = &entity.GetMostDataMovie{
+		MostView:  mostView,
+		MostVoted: mostVoted,
+		MostGenre: mostGenre,
+	}
 
 	return
 }

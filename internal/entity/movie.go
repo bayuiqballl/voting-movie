@@ -23,3 +23,26 @@ type GetListMovieRequest struct {
 	Limit  int    `query:"limit"`
 	Search string `query:"search"`
 }
+
+type GetMostDataMovie struct {
+	MostView  MostView  `json:"most_view"`
+	MostGenre MostGenre `json:"most_genre"`
+	MostVoted MostVoted `json:"most_voted"`
+}
+
+type MostView struct {
+	MovieID int    `json:"movie_id"`
+	Title   string `json:"title"`
+	Count   int    `json:"count"`
+}
+
+type MostGenre struct {
+	Genre string `json:"genre"`
+	Count int    `json:"count"`
+}
+
+type MostVoted struct {
+	MovieID int    `json:"movie_id"`
+	Title   string `json:"title"`
+	Count   int    `json:"count"`
+}

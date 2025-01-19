@@ -136,3 +136,12 @@ func (ms *service) GetListMovies(context context.Context, request entity.GetList
 	return
 
 }
+
+func (ms *service) GetMostDataMovie(context context.Context) (resp *entity.GetMostDataMovie, err error) {
+	resp, err = ms.repository.GetMostDataMovie(context)
+	if err != nil {
+		return resp, err
+	}
+
+	return
+}

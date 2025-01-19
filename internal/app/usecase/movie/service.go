@@ -17,6 +17,7 @@ type Service interface {
 	InsertMovie(context context.Context, request *entity.Movie) (err error)
 	UpdateMovie(context context.Context, request *entity.Movie) (err error)
 	GetListMovies(context context.Context, request entity.GetListMovieRequest) (resp helper.PaginatedResponse, err error)
+	GetMostDataMovie(context context.Context) (resp *entity.GetMostDataMovie, err error)
 }
 
 type service struct {

@@ -12,6 +12,7 @@ import (
 
 type MovieHandler interface {
 	GetListMovies(c *fiber.Ctx) (err error)
+	GetMostDataMovie(c *fiber.Ctx) (err error)
 }
 
 type movieHandler struct {
@@ -36,6 +37,20 @@ func (h *movieHandler) GetListMovies(c *fiber.Ctx) (err error) {
 	}
 
 	resp, err := h.service.GetListMovies(ctx, *request)
+	if err != nil {
+		return helper.ResponseError(c, err)
+	}
+
+	return helper.ResponseOK(c, constant.Success, resp)
+
+}
+
+func (h *movieHandler) GetMostDataMovie(c *fiber.Ctx) (err error) {
+	ctx, cancel := helper.CreateContextWithTimeout()
+	defer cancel()
+	ctx = helper.SetValueToContext(ctx, c)
+
+	resp, err := h.service.GetMostDataMovie(ctx)
 	if err != nil {
 		return helper.ResponseError(c, err)
 	}
