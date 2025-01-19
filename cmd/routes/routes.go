@@ -52,5 +52,5 @@ func VoteRoutes(app fiber.Router, voteHandler handler.VotesHandler) {
 }
 
 func ViewershipRoutes(app fiber.Router, viewershipHandler handler.ViewershipHandler) {
-
+	app.Post("/viewership", viewershipHandler.UpsertViewership)
 }

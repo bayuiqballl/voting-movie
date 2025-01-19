@@ -1,12 +1,16 @@
 package viewership
 
 import (
+	"context"
 	repository "vote-system/internal/app/repository/viewership"
+	"vote-system/internal/entity"
 	"vote-system/pkg/identifier"
 	"vote-system/pkg/validator"
 )
 
-type Service interface{}
+type Service interface {
+	UpsertViewership(ctx context.Context, viewership *entity.Viewership) (err error)
+}
 
 type service struct {
 	repository repository.ViewershipRepository
